@@ -9,9 +9,9 @@ echo "Updating system packages..."
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl apt-transport-https ca-certificates gnupg lsb-release
 
-# Install Podman
-echo "Installing Podman..."
-sudo apt install -y podman
+# Install Podman and CNI plugins
+echo "Installing Podman and CNI plugins..."
+sudo apt install -y podman containernetworking-plugins
 
 # Verify Podman installation
 PODMAN_VERSION=$(podman --version)
@@ -21,6 +21,11 @@ echo "Podman installed: $PODMAN_VERSION"
 echo "Enabling Podman socket..."
 sudo systemctl enable --now podman.socket
 sudo systemctl status podman.socket --no-pager
+
+# Clean up any existing Portainer containers and volumes
+echo "Cleaning up any existing Portainer containers and volumes..."
+sudo podman rm -f portainer 2>/dev/null || true
+sudo podman volume rm portainer_data 2>/dev/null || true
 
 # Create volume for Portainer data
 echo "Creating Portainer data volume..."
@@ -37,7 +42,7 @@ sudo podman run -d \
   --privileged \
   -v /run/podman/podman.sock:/var/run/docker.sock \
   -v portainer_data:/data \
-  portainer/portainer-ee:lts
+  docker.io/portainer/portainer-ee:lts
 
 # Check if Portainer container is running
 echo "Verifying Portainer container status..."

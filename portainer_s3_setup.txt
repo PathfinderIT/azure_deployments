@@ -1,0 +1,19 @@
+=== Instructions for Portainer S3 Backup Configuration ===
+
+1. In Portainer, navigate to Settings > Backup
+2. Select "S3" as the storage backend
+3. Enter these values:
+   - Access key ID: spoonubuntublob01
+   - Secret access key: /evr6nyEKYb+pW7rJyNlydpN7VpO6Fe93BKXsw1ntUjOopeMEHao9MUDKiaspOQuWMmWz8LfrooM+AStaQ+7yw==
+   - Region: eastus
+   - Bucket name: portainer-backups
+   - S3 compatible host: spoonubuntublob01.blob.core.windows.net
+   - Use S3 v2 signatures: Yes
+   - Skip verification: May be required (try both)
+
+4. For alternative configuration, you can also try:
+   - Endpoint URL: https://spoonubuntublob01.blob.core.windows.net
+   - Custom S3 API Prefix: /
+   - Force path style: Enabled
+
+5. Click "Save settings" and test a backup
